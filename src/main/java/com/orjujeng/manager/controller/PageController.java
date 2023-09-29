@@ -10,4 +10,13 @@ public class PageController {
 	public String toSignin() {
 		return "sign-in";
 	}
+	@RequestMapping("/register")
+	public String toRegister() {
+		return "register";
+	}
+	
+	@RequestMapping("/main")
+	public String toMain() {
+		return "main";
+	}
 }

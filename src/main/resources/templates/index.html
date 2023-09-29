@@ -15,7 +15,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
       <div class="container">
-        <a class="navbar-brand" href="../"><strong>Time</strong>sheet Backend</a>
+        <a class="navbar-brand" th:href="@{/}"><strong>Time</strong>sheet Backend</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,12 +23,12 @@
           <ul class="navbar-nav ml-auto align-items-lg-center">
             <h6 class="dropdown-header font-weight-600 d-lg-none px-0">Menu</h6>
             <li class="nav-item ">
-              <a class="nav-link" href="../index.html">Overview</a>
+              <a class="nav-link" th:href="@{/}">Overview</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbar_main_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
               <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1">
-                <a class="dropdown-item" href="../pages/about.html">Register</a>
+                <a class="dropdown-item" th:href="@{/manager/page/register}">Register</a>
                 <a class="dropdown-item" th:href="@{/manager/page/signin}">Sign in</a>
                 <a class="dropdown-item" href="../pages/contact.html">Contact Us</a>
               </div>
@@ -71,8 +71,8 @@
                 <p class="lead text-white mt-4">
                   We put all the experience and know-how in thi product so we can offer you the best product we have ever built.
                 </p>
-                <a href="https://github.com/orjujeng" target="_blank" class="btn bg-white mt-4">
-                  About Us
+                <a th:href="@{/manager/page/signin}" class="btn bg-white mt-4">
+                  Sign In
                 </a>
               </div>
               <div class="col-lg-5">
