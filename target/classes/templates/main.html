@@ -21,7 +21,7 @@
         <ul class="navigation pr-3">
           <li class="navigation-title">Auth Manager</li>
           <li class="navigation-item">
-            <a href="introduction.html" class="navigation-link">As Project Owner</a>
+            <a th:href="@{/manager/page/authowner}" class="navigation-link">As Project Owner</a>
           </li>
           <li class="navigation-title">Profile Info Manager</li>
           <li class="navigation-item">
@@ -60,10 +60,15 @@
             <div class="header-nav ml-auto">
               <ul class="nav align-items-center">
                 <li class="nav-item d-none d-md-inline-block">
-                  <a class="nav-link" href="../docs/changelog.html">Logout</a>
+                  <span class="avatar avatar-lg bg-blue mr-3" th:text="${session.loginUser.nameZh}"></span>
                 </li>
                 <li class="nav-item ml-4">
-                  <a href="https://github.com/webpixels/boomerang-ui-kit/archive/master.zip" class="btn btn-sm btn-primary">Download Free</a>
+                  <button type="button" class="btn btn-primary">
+                    Notifications <span class="badge badge-light ml-2">4</span>
+                  </button>
+                </li>
+                <li class="nav-item d-none d-md-inline-block">
+                  <a class="nav-link" th:href="@{/manager/page/logout}">Logout</a> 
                 </li>
               </ul>
             </div>

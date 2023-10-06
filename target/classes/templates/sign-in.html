@@ -92,7 +92,7 @@
                     </div>
                   <form class="form-primary" id="loginInForm">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="input_email" placeholder="Username" name="username">
+                      <input type="text" class="form-control" id="input_email" placeholder="Account Num" name="accountNum">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control" id="input_password" placeholder="Password"
@@ -203,14 +203,23 @@
 </body>
 <script>
   $('#loginInButton').click(function () {
+	  var formData = {
+			  accountNum: $("#input_email").val(),
+              password: $("#input_password").val()
+          };
     $.ajax({
       url: "/manager/auth/login",
       type: "POST",
-      data: $('#loginInForm').serialize(),
+      contentType: "application/json",
+      data: JSON.stringify(formData),
       success: function (data) {
         if (data.code == 200) {
           window.location.href='/manager/page/main';
-        } else {
+        } else if(data.code == 005){
+        	$('#alertPopup').removeAttr('hidden');
+            $('#alertPopup').html('Incorrect Password or AccountNum');
+        }
+        else {
           $('#alertPopup').removeAttr('hidden');
           $('#alertPopup').html('Network Issue');
           return;

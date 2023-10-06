@@ -1,6 +1,9 @@
 package com.orjujeng.manager.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -16,7 +19,25 @@ public class PageController {
 	}
 	
 	@RequestMapping("/main")
-	public String toMain() {
-		return "main";
+	public String toMain(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "main";
+		}
+		return "sign-in";
 	}
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			session.removeAttribute("loginUser");
+		}
+		return "index";
+	}
+	@RequestMapping("/authowner")
+	public String toAuth(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "auth";
+		}
+		return "sign-in";
+	}
+	
 }
