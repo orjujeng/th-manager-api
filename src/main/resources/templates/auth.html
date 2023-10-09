@@ -306,7 +306,7 @@
         $("#accessTable").show();
         for (i = 0; i < data.data.length; i++) {
           let str;
-          str += "<tr class='bg-white'>"
+          str += "<tr class='bg-white' aId=" + data.data[i].aid + " memberId=" + data.data[i].memberId + ">"
             + "<th scope='row'>"
             + "<div class='media align-items-center'><span class='avatar avatar-lg bg-light mr-3'>"
             + data.data[i].memberInfo.nameZh
@@ -316,43 +316,69 @@
             + "<span class='font-weight-normal text-muted'>Web Developer</span></div></th>"
             + "<td>" + data.data[i].memberInfo.accountNum + "</td>";
           if (data.data[i].memberInfo.authOfBackend === "Y") {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           str += "<td>" + data.data[i].memberInfo.deleteFlag + "</td>"
           str += "<td>" + data.data[i].memberInfo.expiredDate + "</td>"
           str += "<td>" + data.data[i].memberInfo.joinDate + "</td>"
           if (data.data[i].authAccess === "Y") {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input  type='checkbox' checked onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           if (data.data[i].profileAccess === "Y") {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           if (data.data[i].timesheetAccess === "Y") {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           if (data.data[i].requestAccess === "Y") {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {
-            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           str += "</tr><tr class='table-divider'></tr>"
           $("#accessTbody").append(str);
         }
-
       } else if (data.code == '006') {
         $("#noAccessPopUp").click();
       }
     }
   });
-
+  var changeStatus = function () {
+    var data = {
+      type: event.target.id,
+      value: event.target.checked ? 'Y' : 'N',
+      aId: $(event.currentTarget).parents('tr')[0].attributes.aId.nodeValue,
+      memberId: $(event.currentTarget).parents('tr')[0].attributes.memberId.nodeValue
+    };
+    console.log(data);
+    $.ajax({
+      url: "/manager/auth/login",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(data),
+      success: function (data) {
+        if (data.code == 200) {
+          window.location.href = '/manager/page/main';
+        } else if (data.code == 005) {
+          $('#alertPopup').removeAttr('hidden');
+          $('#alertPopup').html('Incorrect Password or AccountNum');
+        }
+        else {
+          $('#alertPopup').removeAttr('hidden');
+          $('#alertPopup').html('Network Issue');
+          return;
+        }
+      }
+    });
+  }
   // $('#loginInButton').click(function () {
   //   var formData = {
   // 		  accountNum: $("#input_email").val(),
@@ -380,4 +406,5 @@
   // });
 </script>
 </body>
+
 </html>
