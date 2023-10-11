@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.orjujeng.manager.entity.AuthUpdate;
 import com.orjujeng.manager.entity.LoginInfo;
 import com.orjujeng.manager.utils.Result;
 
@@ -16,4 +17,7 @@ public interface AuthApiFeginService {
 	
 	@RequestMapping("auth/getAuthList")
 	public Result getAuthList(@RequestParam(required = true) Integer memberId);
+	
+	@RequestMapping("auth/updateAuthInfo")
+	public Result updateAuthInfo(@RequestBody AuthUpdate authUpdate);
 }

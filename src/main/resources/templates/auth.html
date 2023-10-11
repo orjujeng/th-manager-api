@@ -134,7 +134,7 @@
           <div class="modal-body">
             <div class="py-3 text-center">
               <i class="fas fa-exclamation-circle fa-4x"></i>
-              <h4 class="heading mt-4">You do not have access to find this info!</h4>
+              <h4 class="heading mt-4" id="errorMsg"></h4>
               <p>
                 You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain
                 a gallery:
@@ -306,7 +306,7 @@
         $("#accessTable").show();
         for (i = 0; i < data.data.length; i++) {
           let str;
-          str += "<tr class='bg-white' aId=" + data.data[i].aid + " memberId=" + data.data[i].memberId + ">"
+          str += "<tr class='bg-white' aId=" + data.data[i].aid + " memberId=" + data.data[i].memberId + " accountNum="+data.data[i].memberInfo.accountNum+">"
             + "<th scope='row'>"
             + "<div class='media align-items-center'><span class='avatar avatar-lg bg-light mr-3'>"
             + data.data[i].memberInfo.nameZh
@@ -347,35 +347,97 @@
           $("#accessTbody").append(str);
         }
       } else if (data.code == '006') {
+        $("#errorMsg").text("You do not have access to find this info!");
         $("#noAccessPopUp").click();
       }
     }
   });
+  var flash=function(){
+    $.ajax({
+    type: 'GET',
+    dataType: "json",
+    url: "/manager/auth/authList",
+    success: function (data) {
+      $("#accessTable").hide()
+      if (data.code == '200') {
+        $("#accessTable").show();
+        for (i = 0; i < data.data.length; i++) {
+          let str;
+          str += "<tr class='bg-white' aId=" + data.data[i].aid + " memberId=" + data.data[i].memberId + " accountNum="+data.data[i].memberInfo.accountNum+">"
+            + "<th scope='row'>"
+            + "<div class='media align-items-center'><span class='avatar avatar-lg bg-light mr-3'>"
+            + data.data[i].memberInfo.nameZh
+            + "</span>"
+            + "<div class='media-body'>"
+            + "<h6 class='h5 font-weight-normal mb-0'>" + data.data[i].memberInfo.nameZh + "</h6>"
+            + "<span class='font-weight-normal text-muted'>Web Developer</span></div></th>"
+            + "<td>" + data.data[i].memberInfo.accountNum + "</td>";
+          if (data.data[i].memberInfo.authOfBackend === "Y") {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          } else {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          }
+          str += "<td>" + data.data[i].memberInfo.deleteFlag + "</td>"
+          str += "<td>" + data.data[i].memberInfo.expiredDate + "</td>"
+          str += "<td>" + data.data[i].memberInfo.joinDate + "</td>"
+          if (data.data[i].authAccess === "Y") {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input  type='checkbox' checked onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          } else {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          }
+          if (data.data[i].profileAccess === "Y") {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          } else {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          }
+          if (data.data[i].timesheetAccess === "Y") {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          } else {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          }
+          if (data.data[i].requestAccess === "Y") {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          } else {
+            str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
+          }
+          str += "</tr><tr class='table-divider'></tr>"
+          $("#accessTbody").append(str);
+        }
+      } else if (data.code == '006') {
+        $("#errorMsg").text("You do not have access to find this info!");
+        $("#noAccessPopUp").click();
+      }
+    }
+  });
+  }
   var changeStatus = function () {
     var data = {
       type: event.target.id,
       value: event.target.checked ? 'Y' : 'N',
-      aId: $(event.currentTarget).parents('tr')[0].attributes.aId.nodeValue,
-      memberId: $(event.currentTarget).parents('tr')[0].attributes.memberId.nodeValue
+      aid: $(event.currentTarget).parents('tr')[0].attributes.aId.nodeValue,
+      memberId: $(event.currentTarget).parents('tr')[0].attributes.memberId.nodeValue,
+      accountNum: $(event.currentTarget).parents('tr')[0].attributes.accountNum.nodeValue
     };
-    console.log(data);
     $.ajax({
-      url: "/manager/auth/login",
+      url: "/manager/auth/authUpdate",
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(data),
       success: function (data) {
-        if (data.code == 200) {
-          window.location.href = '/manager/page/main';
-        } else if (data.code == 005) {
-          $('#alertPopup').removeAttr('hidden');
-          $('#alertPopup').html('Incorrect Password or AccountNum');
+        if (data.code != 200) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Update with Error,Please Retry!");
+          $("#noAccessPopUp").click();
+          flash();
         }
-        else {
-          $('#alertPopup').removeAttr('hidden');
-          $('#alertPopup').html('Network Issue');
-          return;
-        }
+        $("#accessTbody").empty();
+        flash();
+      },
+      error: function(data){
+        $("#accessTbody").empty();
+        $("#errorMsg").text("Update with Error,Please Retry!");
+        $("#noAccessPopUp").click();
+        flash();
       }
     });
   }

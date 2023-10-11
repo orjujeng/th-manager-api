@@ -3,6 +3,7 @@ package com.orjujeng.manager.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.orjujeng.manager.entity.AuthUpdateVo;
 import com.orjujeng.manager.entity.LoginVo;
 import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.entity.RegisterVo;
@@ -55,5 +57,11 @@ public class AuthController {
 		Integer memberId = memberInfo.getId();
 		Result authResult =authService.getAuthList(memberId);
 		return authResult;
+	}
+	
+	@RequestMapping("/authUpdate")
+	public Result authUpdate(@RequestBody AuthUpdateVo authUpdateVo) {
+		Result result = authService.updateAuthSetting(authUpdateVo);
+		return result;
 	}
 }
