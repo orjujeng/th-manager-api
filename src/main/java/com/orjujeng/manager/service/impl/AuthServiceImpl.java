@@ -44,4 +44,9 @@ public class AuthServiceImpl implements AuthService{
 		Result result = authApiFeginService.updateAuthInfo(authUpdate);
 		return result;
 	}
+	@Override
+	public Result checkAuth(Integer memberId, String type) {
+		Result result =  authApiFeginService.checkAuthOfAll(memberId,type);
+		return result;
+	}
 }

@@ -64,4 +64,13 @@ public class AuthController {
 		Result result = authService.updateAuthSetting(authUpdateVo);
 		return result;
 	}
+	
+	@RequestMapping("/check")
+	public Result profileCheck(HttpSession session,@RequestParam(required = true) String type) {
+		String s = JSON.toJSONString(session.getAttribute("loginUser"));
+		MemberInfo memberInfo = JSONObject.parseObject(s, MemberInfo.class);
+		Integer memberId = memberInfo.getId();
+		Result authResult =authService.checkAuth(memberId,type);
+		return authResult;
+	}	
 }

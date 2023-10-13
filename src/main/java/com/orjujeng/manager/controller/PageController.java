@@ -40,4 +40,67 @@ public class PageController {
 		return "sign-in";
 	}
 	
+	@RequestMapping("/projectowner")
+	public String toProfile(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "profile";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/mangagerowner")
+	public String toProfileManager(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "profile-mangager";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/thNew")
+	public String toThNew(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "timesheet-new";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/thProgress")
+	public String toThProgress(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "timesheet-progress";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/thDone")
+	public String toThDone(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "timesheet-done";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/requestPending")
+	public String toRequestPending(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "request-pending";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/requestDenyed")
+	public String toRequestDenyed(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "request-denyed";
+		}
+		return "sign-in";
+	}
+	
+	@RequestMapping("/requestAllowed")
+	public String toRequestAllowed(HttpSession session) {
+		if(session.getAttribute("loginUser")!= null) {
+			return "request-allowed";
+		}
+		return "sign-in";
+	}
 }

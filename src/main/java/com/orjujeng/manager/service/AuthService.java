@@ -14,4 +14,6 @@ public interface AuthService {
 
 	Result updateAuthSetting(AuthUpdateVo authUpdateVo);
 
+	Result checkAuth(Integer memberId, String type);
+
 }
