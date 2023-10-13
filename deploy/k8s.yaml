@@ -1,0 +1,63 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: th-manager-api
+  namespace: th-manager-api
+  labels:
+    app: th-manager-api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: th-manager-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: th-manager-api
+        version: v1
+    spec:
+      containers:
+        - name: container-th-manager-api
+          image: $REGISTRY/orjujeng/th-manager-api:prod
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+--- 
+kind: Service
+apiVersion: v1
+metadata:
+  name: th-manager-api
+  namespace: th-manager-api
+  labels:
+    app: th-manager-api
+    version: v1
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: th-manager-api
+  type: NodePort
+  
