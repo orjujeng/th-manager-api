@@ -75,7 +75,8 @@
         </ul>
       </div>
     </div>
-    <section class="slice slice-lg bg-tertiary bg-cover bg-size--contain" th:style=" 'background-image: url('+ @{/assets/images/backgrounds/img-1.png} +') background-position: center 10%;'" >
+    <section class="slice slice-lg bg-tertiary bg-cover bg-size--contain"
+      th:style=" 'background-image: url('+ @{/assets/images/backgrounds/img-1.png} +') background-position: center 10%;'">
       <span class="mask bg-primary alpha-7"></span>
       <div class="container text-center">
         <div class="row cols-xs-space cols-sm-space cols-md-space">
@@ -86,10 +87,12 @@
             <div class="row justify-content-center mt-4">
               <div class="col-lg-8">
                 <p class="lead text-white">
-                  Boomerang is a great free UI package based on Bootstrap 4 that includes the most important components and features so you can jumpstart the hard work and get right to the website creation fast and easy.
+                  Boomerang is a great free UI package based on Bootstrap 4 that includes the most important components
+                  and features so you can jumpstart the hard work and get right to the website creation fast and easy.
                 </p>
                 <div class="btn-container mt-5">
-                  <a href="https://github.com/webpixels/boomerang-ui-kit/archive/master.zip" class="btn btn-lg bg-white px-4">
+                  <a href="https://github.com/webpixels/boomerang-ui-kit/archive/master.zip"
+                    class="btn btn-lg bg-white px-4">
                     Download Free
                   </a>
                 </div>
@@ -100,19 +103,23 @@
       </div>
     </section>
     <section style="float: right;">
-      <button type="button" class="btn btn-sm btn-outline-primary btn-icon" data-toggle="modal" data-target="#modal_1" id ="createProfileBtn">
+      <button type="button" class="btn btn-sm btn-outline-primary btn-icon" data-toggle="modal" data-target="#modal_1"
+        id="createProfileBtn">
         <span class="btn-inner--text">Create Account</span>
         <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger btn-icon" data-toggle="modal" data-target="#modal_1" id ="removeProfileBtn">
+      <button type="button" class="btn btn-sm btn-outline-danger btn-icon" data-toggle="modal" data-target="#modal_1"
+        id="removeProfileBtn">
         <span class="btn-inner--text">Deactivate</span>
         <span class="btn-inner--icon"><i class="fas fa-user-times"></i></span>
       </button>
-      <button type="button" class="btn btn-sm btn-outline-primary btn-icon" data-toggle="modal" data-target="#modal_1" id ="createProjectBtn">
+      <button type="button" class="btn btn-sm btn-outline-primary btn-icon" data-toggle="modal" data-target="#modal_1"
+        id="createProjectBtn">
         <span class="btn-inner--text">Create Project</span>
         <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger btn-icon" data-toggle="modal" data-target="#modal_1" id ="removeProjectBtn">
+      <button type="button" class="btn btn-sm btn-outline-danger btn-icon" data-toggle="modal" data-target="#modal_1"
+        id="removeProjectBtn">
         <span class="btn-inner--text">Deactivate</span>
         <span class="btn-inner--icon"><i class="fas fa-user-times"></i></span>
       </button>
@@ -127,86 +134,10 @@
       <!-- popup with from -->
       <div class="modal modal-fluid fade" id="modal_1" tabindex="-1" role="dialog" aria-labelledby="modal_1"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          
-          <div class="modal-content">
-            <div class="modal-body">
-              <div class="row justify-content-center">
-                <div class="col-lg-8 text-center py-4">
-                  <h4 class="heading h3">Unleash your creativity!</h4>
-                  <p class="lead text-muted">
-                    You can easy create stackable modal boxes. For example, your inline content or Ajax response can
-                    contain a gallery:
-                  </p>
-                  <div class="py-md">
-                    <img th:src="@{/assets/images/prv/splash.png}" class="img-fluid img-center">
-                  </div>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Let's do this!</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
     <table class="table table-hover align-items-center" id="profileTable">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Account Num</th>
-          <th scope="col">Manager Id</th>
-          <th scope="col">Manager Name</th>
-          <th scope="col">Perm</th>
-          <th scope="col">Join Date</th>
-          <th scope="col">Expire Date</th>
-          <th scope="col">Delete Flag</th>
-          <th scope="col">Project Code</th>
-          <th scope="col">Proportion</th>
-          <th scope="col">Project Name</th>
-          <th scope="col">Project Expire Date</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody id="profileTbody">
-        <tr class="bg-white" scope="row">
-          <td>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="td_checkbox_1">
-              <label class="custom-control-label" for="td_checkbox_1"></label>
-            </div>
-          </td>
-          <td>
-            <div class="media align-items-center">
-              <img src="../assets/images/prv/thumb-1.jpg" class="avatar avatar-lg mr-3">
-              <div class="media-body">
-                <h6 class="h5 font-weight-normal mb-0">Nabiha Armstrong</h6>
-                <span class="font-weight-normal text-muted">Web Developer</span>
-              </div>
-            </div>
-          </td>
-          <td>nabiha.armstrong@example.com</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>Cluj Napoca, RO</td>
-          <td>
-            <button type="button" class="btn btn-primary btn-icon-only" data-toggle="modal" data-target="#modal_1">
-              <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
-            </button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger btn-icon-only" data-toggle="modal" data-target="#modal_1">
-              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
     </table>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal_5" hidden="true"
@@ -389,86 +320,168 @@
 <!-- Theme JS -->
 <script th:src="@{/assets/js/theme.js}"></script>
 <script>
-   $("#projectInfo").on("click",function(){
-    $("#profileTable").empty();
-    let table;
-    table += "<thead><tr><th scope='col'>Project Id</th><th scope='col'>Project Code</th><th scope='col'>Project Name</th><th scope='col'>Expire Date</th></tr></thead><tbody id='profileTbody'></tbody>"
-    $("#profileTable").append(table);
-    let context;
-    context+=""
-    $("#profileTbody").append(context);
 
-  });
-  var flash = function () {
-    $.ajax({
-      type: 'GET',
-      dataType: "json",
-      url: "/manager/profile/profileList",
-      success: function (data) {
-        $("#accessTable").hide()
-        if (data.code == '200') {
-          $("#accessTable").show();
-          for (i = 0; i < data.data.length; i++) {
-            let str;
-            str += "<tr class='bg-white' aId=" + data.data[i].aid + " memberId=" + data.data[i].memberId + " accountNum=" + data.data[i].memberInfo.accountNum + ">"
-              + "<th scope='row'>"
-              + "<div class='media align-items-center'><span class='avatar avatar-lg bg-light mr-3'>"
-              + data.data[i].memberInfo.nameZh
-              + "</span>"
-              + "<div class='media-body'>"
-              + "<h6 class='h5 font-weight-normal mb-0'>" + data.data[i].memberInfo.nameZh + "</h6>"
-              + "<span class='font-weight-normal text-muted'>Web Developer</span></div></th>"
-              + "<td>" + data.data[i].memberInfo.accountNum + "</td>";
-            if (data.data[i].memberInfo.authOfBackend === "Y") {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            } else {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            }
-            str += "<td>" + data.data[i].memberInfo.deleteFlag + "</td>"
-            str += "<td>" + data.data[i].memberInfo.expiredDate + "</td>"
-            str += "<td>" + data.data[i].memberInfo.joinDate + "</td>"
-            if (data.data[i].authAccess === "Y") {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input  type='checkbox' checked onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            } else {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            }
-            if (data.data[i].profileAccess === "Y") {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            } else {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='profileAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            }
-            if (data.data[i].timesheetAccess === "Y") {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            } else {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='timesheetAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            }
-            if (data.data[i].requestAccess === "Y") {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' checked onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            } else {
-              str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus(this)' id='requestAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
-            }
-            str += "</tr><tr class='table-divider'></tr>"
-            $("#accessTbody").append(str);
+  // create project
+  $("#createProjectBtn").on("click", function () {
+    $("#modal_1").empty();
+    $("#modal_1").append("<div class='modal-dialog modal-lg' role='document'><div class='modal-content'><div class='modal-body'><div class='row justify-content-center'><div class='col-lg-8 text-center py-4'><h4 class='heading h3'>Create The New Project!</h4><p class='lead text-muted'>You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a gallery:</p><div class='form-group'><input type='text' id='createProjectProjectCode' class='form-control border-0' placeholder='Project Code'></div><div class='form-group'><input type='text' id='createProjectProjectName' class='form-control border-0' placeholder='Project Name'></div><div class='form-group'><input type='text' id='createProjectExpireDate' class='form-control border-0' placeholder='Expire Date'></div><button type='button' class='btn btn-primary' onclick='createProjectSub()'>Create Project</button></div></div></div></div></div>")
+  })
+
+
+  var createProjectSub = function () {
+    let input = {
+      projectCode: $("#createProjectProjectCode").val(),
+      projectName: $("#createProjectProjectName").val(),
+      expireDate: new Date($("#createProjectExpireDate").val())
+    }
+    console.log(input)
+    $.ajax(
+      {
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(input),
+        url: "/manager/profile/createProject",
+        success: function (data) {
+          if (data.code == '200') {
+            $("#projectInfo").click()
           }
-        } else if (data.code == '006') {
-          $("#errorMsg").text("You do not have access to find this info!");
+          else {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Update Error,Please Retry!");
+            $("#noAccessPopUp").click();
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps, Update Error,Please Retry!");
           $("#noAccessPopUp").click();
         }
-      }
-    });
+      })
   }
+
+  //profile && project change
+  $("#profileInfo").on("click", function () {
+    $.ajax(
+      {
+        type: 'GET',
+        dataType: "json",
+        url: "/manager/auth/check?type=profile_access",
+        success: function (data) {
+          if (data.code == '006') {
+            $("#errorMsg").text("You do not have access to find this info!");
+            $("#noAccessPopUp").click();
+          } else if (data.code == '200') {
+            $("#createProjectBtn").hide();
+            $("#profileInfo").hide();
+            $("#removeProjectBtn").hide();
+            $("#removeProfileBtn").show();
+            $("#projectInfo").show();
+            $("#createProfileBtn").show();
+            $("#profileTable").empty();
+            let table = "<thead><tr><th scope='col'>Name</th><th scope='col'>Account Num</th><th scope='col'>Manager Id</th><th scope='col'>Manager Name</th><th scope='col'>Perm</th><th scope='col'>Join Date</th><th scope='col'>Expire Date</th><th scope='col'>Delete Flag</th><th scope='col'>Project Code</th><th scope='col'>Proportion</th><th scope='col'>Project Name</th><th scope='col'>Project Expire Date</th><th scope='col'>Edit</th><th scope='col'>Delete</th></tr></thead><tbody id='profileTbody'></tbody>"
+            $("#profileTable").append(table);
+            let context;
+            context += ""
+            $("#profileTbody").append(context);
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      });
+  });
+
+  $("#projectInfo").on("click", function () {
+    $.ajax(
+      {
+        type: 'GET',
+        dataType: "json",
+        url: "/manager/auth/check?type=profile_access",
+        success: function (data) {
+          if (data.code == '006') {
+            $("#errorMsg").text("You do not have access to find this info!");
+            $("#noAccessPopUp").click();
+          } else if (data.code == '200') {
+            $("#createProjectBtn").show();
+            $("#profileInfo").show();
+            $("#removeProjectBtn").show();
+            $("#removeProfileBtn").hide();
+            $("#projectInfo").hide();
+            $("#createProfileBtn").hide();
+            $("#profileTable").empty();
+            let table;
+            table += "<thead><tr><th scope='col'>Project Id</th><th scope='col'>Project Code</th><th scope='col'>Project Name</th><th scope='col'>Expire Date</th><th scope='col'>Edit</th><th scope='col'>Delete</th></tr></thead><tbody id='profileTbody'></tbody>"
+            $("#profileTable").append(table);
+            let context;
+            $.ajax({
+              type: 'GET',
+              dataType: "json",
+              url: "/manager/profile/projectList",
+              success: function (data) {
+                if (data.code == '200') {
+                  context = ""
+                  for (i = 0; i < data.data.length; i++) {
+                    context += "<tr class='bg-white' scope='row'>"
+                      + "<td>" + data.data[i].id + "</td>"
+                      + "<td>" + data.data[i].projectCode + "</td>"
+                      + "<td>" + data.data[i].projectName + "</td>"
+                      + "<td>" + data.data[i].expireDate + "</td>"
+                      + "<td><button type='button' class='btn btn-primary btn-icon-only' id=" + data.data[i].id + "' data-toggle='modal' data-target='#modal_1'>"
+                      + "<span class='btn-inner--icon'><i class='fas fa-user'></i></span></button></td>"
+                      + "<td><button type='button' class='btn btn-danger btn-icon-only' id=" + data.data[i].id + "' data-toggle='modal' data-target='#modal_1'>"
+                      + "<span class='btn-inner--icon'><i class='fas fa-trash-alt'></i></span></button></td>"
+                  }
+                }
+                $("#profileTbody").append(context);
+              },
+              error: function (data) {
+                $("#accessTbody").empty();
+                $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+                $("#noAccessPopUp").click();
+              }
+            })
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      })
+  });
+
+  //jump to this page 
   $.ajax(
     {
       type: 'GET',
       dataType: "json",
       url: "/manager/auth/check?type=profile_access",
       success: function (data) {
+        $("#createProjectBtn").hide();
+        $("#profileInfo").hide();
+        $("#removeProjectBtn").hide();
         if (data.code == '006') {
           $("#errorMsg").text("You do not have access to find this info!");
           $("#noAccessPopUp").click();
         } else if (data.code == '200') {
 
+          let table = "<thead><tr><th scope='col'>Name</th><th scope='col'>Account Num</th><th scope='col'>Manager Id</th><th scope='col'>Manager Name</th><th scope='col'>Perm</th><th scope='col'>Join Date</th><th scope='col'>Expire Date</th><th scope='col'>Delete Flag</th><th scope='col'>Project Code</th><th scope='col'>Proportion</th><th scope='col'>Project Name</th><th scope='col'>Project Expire Date</th><th scope='col'>Edit</th><th scope='col'>Delete</th></tr></thead><tbody id='profileTbody'></tbody>"
+          $("#profileTable").append(table);
+          let context;
+          context += ""
+          $("#profileTbody").append(context);
         }
+      },
+      error: function (data) {
+        $("#createProjectBtn").hide();
+        $("#profileInfo").hide();
+        $("#removeProjectBtn").hide();
+        $("#accessTbody").empty();
+        $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+        $("#noAccessPopUp").click();
       }
     });
+
 </script>
