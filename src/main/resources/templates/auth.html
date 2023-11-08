@@ -322,8 +322,8 @@
             str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input type='checkbox' onclick='changeStatus()' id='authOfBackend'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           }
           str += "<td>" + data.data[i].memberInfo.deleteFlag + "</td>"
-          str += "<td>" + data.data[i].memberInfo.expiredDate + "</td>"
-          str += "<td>" + data.data[i].memberInfo.joinDate + "</td>"
+          str += "<td>" +new Date(data.data[i].memberInfo.expiredDate).toLocaleDateString() + "</td>"
+          str += "<td>" + new Date(data.data[i].memberInfo.joinDate).toLocaleDateString() + "</td>"
           if (data.data[i].authAccess === "Y") {
             str += "<td><div class='col-md-4'><label class='d-block'></label><label class='toggle-switch'><input  type='checkbox' checked onclick='changeStatus(this)' id='authAccess'><span class='toggle-switch-slider rounded-circle'></span></label></div></td>"
           } else {

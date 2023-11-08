@@ -23,4 +23,7 @@ public interface AuthApiFeginService {
 	
 	@RequestMapping("auth/check")
 	public Result checkAuthOfAll(@RequestParam(required = true) Integer memberId,@RequestParam(required = true) String type);	
+	
+	@RequestMapping("auth/addAuthInfo")
+	public Result addAuthInfo(@RequestParam(required = true) Integer memberId,@RequestParam(required = true) String accountNum);
 }
