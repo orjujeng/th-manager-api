@@ -26,4 +26,7 @@ public interface AuthApiFeginService {
 	
 	@RequestMapping("auth/addAuthInfo")
 	public Result addAuthInfo(@RequestParam(required = true) Integer memberId,@RequestParam(required = true) String accountNum);
+	
+	@RequestMapping("auth/deleteAuthInfo")
+	public Result deleteAuthInfo(@RequestParam(required = true) Integer memberId,@RequestParam(required = true) String accountNum);	
 }

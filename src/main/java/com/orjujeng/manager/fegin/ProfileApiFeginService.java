@@ -1,5 +1,6 @@
 package com.orjujeng.manager.fegin;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.orjujeng.manager.entity.AddBindingInfo;
 import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.entity.ProjectInfo;
+import com.orjujeng.manager.entity.UpdateBindingInfo;
 import com.orjujeng.manager.utils.Result;
+
 
 
 @FeignClient("TH-ProfileApi")
@@ -45,5 +48,20 @@ public interface ProfileApiFeginService {
 	
 	@GetMapping("/profile/member/getMemberById")
 	public Result getMemberInfoById(@RequestParam(required = false) Integer id);
-		
+	
+	@PostMapping("/profile/member/updateMember")
+	public Result updateMemberInfoByAccountNum(@Valid @RequestBody MemberInfo memberInfo);
+	
+	@PostMapping("/profile/binding/updatebinding")
+	public Result updatebinding(@RequestBody @Valid UpdateBindingInfo bindingInfo);
+	
+	@PostMapping("/profile/member/deleteMember")
+	public Result deleteMember(@RequestParam(required = true,value = "id") Integer id);
+	
+	@PostMapping("/profile/binding/deletebinding")
+	public Result deletebinding(@RequestParam(required = true,value = "accountNum") String accountNum);
+	
+	@GetMapping("/profile/member/getMemberByManagerId")
+	public Result getMemberByManagerId(@RequestParam(required = true,value = "memberId") Integer memberId);
+	
 }

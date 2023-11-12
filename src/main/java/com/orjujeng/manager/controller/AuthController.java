@@ -20,6 +20,7 @@ import com.orjujeng.manager.entity.LoginVo;
 import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.entity.RegisterVo;
 import com.orjujeng.manager.service.AuthService;
+import com.orjujeng.manager.service.ProfileService;
 import com.orjujeng.manager.utils.Result;
 import com.orjujeng.manager.utils.ResultCode;
 
@@ -32,9 +33,12 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 	@Autowired
 	AuthService authService;
+	
+	@Autowired
+	ProfileService profileService;
+	
 	@RequestMapping("/login")
 	public Result login(@RequestBody LoginVo login,HttpSession session) {
-		log.error(login.getAccountNum());
 		Result result = authService.vaildLoginInfo(login);
 		if(result.getCode().equals(ResultCode.SUCCESS.code)) {
 			session.setAttribute("loginUser", result.getData());
@@ -70,7 +74,13 @@ public class AuthController {
 		String s = JSON.toJSONString(session.getAttribute("loginUser"));
 		MemberInfo memberInfo = JSONObject.parseObject(s, MemberInfo.class);
 		Integer memberId = memberInfo.getId();
-		Result authResult =authService.checkAuth(memberId,type);
-		return authResult;
+		if(type!=null&&type.equals("manager_access")) {
+			Result authResult = profileService.checkManagmentInfo(memberId);
+			return authResult;
+		}else {
+			Result authResult =authService.checkAuth(memberId,type);
+			return authResult;
+		}
+		
 	}	
 }

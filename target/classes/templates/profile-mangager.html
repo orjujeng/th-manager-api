@@ -95,7 +95,8 @@
         </div>
       </div>
     </section>
-
+    <table class="table table-hover align-items-center" id="profileTable">
+    </table>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal_5" hidden="true"
       id="noAccessPopUp">
@@ -127,6 +128,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- popup with from -->
+    <div class="modal modal-fluid fade" id="modal_1" tabindex="-1" role="dialog" aria-labelledby="modal_1"
+      aria-hidden="true">
     </div>
     <section class="slice slice-lg">
 
@@ -276,3 +281,143 @@
 <script th:src="@{/assets/vendor/textarea-autosize/textarea-autosize.min.js}"></script>
 <!-- Theme JS -->
 <script th:src="@{/assets/js/theme.js}"></script>
+<script>
+  //init
+  $(function () {
+    jumpToThisPage();
+  });
+  // edit profile button
+  var editProfile = function () {
+    $("#modal_1").empty();
+    if (event.target.className != "btn btn-primary btn-icon-only") {
+      $("#modal_1").append("<div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='modal_title_6'>Notification</h5>  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>    <span aria-hidden='true'>&times;</span>  </button></div><div class='modal-body'>  <div class='py-3 text-center'>    <i class='fas fa-exclamation-circle fa-4x'></i>    <h4 class='heading mt-4'>Please Click The Button Not Icon!</h4>    <p>      You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a gallery:</p></div></div><div class='modal-footer'><button type='button' class='btn btn-sm btn-secondary' data-dismiss='modal'>Got it</button></div></div></div>")
+    } else {
+      let context = '';
+      context += "<div class='modal-dialog modal-lg' role='document'><div class='modal-content'><div class='modal-body'><div class='row justify-content-center'><div class='col-lg-8 text-center py-4'><h4 class='heading h3'>Edit This Profile!</h4><p class='lead text-muted'>You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a gallery:</p>"
+        + "<div class='form-group'><input type='text' id='editProfileAccountNum' class='form-control border-0' value='" + event.target.id + "' readonly='true'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileManagerName' class='form-control border-0' placeholder='Manager Name'></div>"
+        + "<div class='form-group'><input type='text' id='editProfilePerm' class='form-control border-0' placeholder='Perm Y|N'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileJoinDate' class='form-control border-0' placeholder='Join Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileExpiredDate' class='form-control border-0' placeholder='Expired Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectSelect' class='form-control border-0' placeholder='Project Select'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectStartDate' class='form-control border-0' placeholder='Project Start Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectExpireDate' class='form-control border-0' placeholder='Project Expire Date'></div>"
+        + "<button type='button' class='btn btn-primary' onclick='editProfileSub()'>Edit Profile</button></div></div></div></div>"
+      $("#modal_1").append(context)
+    }
+  }
+  //confirm click edit profile button
+  var editProfileSub = function () {
+    let editProfileProjectSelectList = new Array();
+    editProfileProjectSelectList = $("#editProfileProjectSelect").val().split(',');
+    let editProfileProjectStartDateList = new Array();
+    editProfileProjectStartDateList = $("#editProfileProjectStartDate").val().split(',');
+    for (let i = 0; i < editProfileProjectStartDateList.length; i++) {
+      editProfileProjectStartDateList[i] = new Date(editProfileProjectStartDateList[i]);
+    }
+    let editProfileProjectExpireDateList = new Array();
+    editProfileProjectExpireDateList = $("#editProfileProjectExpireDate").val().split(',');
+    for (let i = 0; i < editProfileProjectExpireDateList.length; i++) {
+      editProfileProjectExpireDateList[i] = new Date(editProfileProjectExpireDateList[i]);
+    }
+    let input = {
+      accountNum: $("#editProfileAccountNum").val(),
+      managerName: $("#editProfileManagerName").val(),
+      perm: $("#editProfilePerm").val(),
+      joinDate: new Date($("#editProfileJoinDate").val()),
+      expiredDate: new Date($("#editProfileExpiredDate").val()),
+      projectCode: editProfileProjectSelectList,
+      projectStartDate: editProfileProjectStartDateList,
+      projectExpireDate: editProfileProjectExpireDateList
+    }
+    $.ajax(
+      {
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(input),
+        url: "/manager/profile/editProfile",
+        success: function (data) {
+          if (data.code == '200') {
+            jumpToThisPage();
+          }
+          else {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Update Error,Please Retry!");
+            $("#noAccessPopUp").click();
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps, Update Error,Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      })
+  }
+
+
+  //jump to this page 
+  var jumpToThisPage = function () {
+    $("#profileTable").empty();
+    $.ajax(
+      {
+        type: 'GET',
+        dataType: "json",
+        url: "/manager/auth/check?type=manager_access",
+        success: function (data) {
+          if (data.code == '006') {
+            $("#errorMsg").text("You do not have access to find this info!");
+            $("#noAccessPopUp").click();
+          } else if (data.code == '200') {
+            let table = "<thead><tr><th scope='col'>Name</th><th scope='col'>Account Num</th><th scope='col'>Manager Id</th><th scope='col'>Manager Name</th><th scope='col'>Perm</th><th scope='col'>Join Date</th><th scope='col'>Expire Date</th><th scope='col'>Delete Flag</th><th scope='col'>Project Code</th><th scope='col'>Proportion</th><th scope='col'>Project Name</th><th scope='col'>Project Expire Date</th><th scope='col'>Member Project Expire Date</th><th scope='col'>Member Project Start Date</th><th scope='col'>Edit</th></tr></thead><tbody id='profileTbody'></tbody>"
+            $("#profileTable").append(table);
+            $.ajax({
+              type: "GET",
+              contentType: "application/json",
+              url: "/manager/profile/getProfileListByManagerId",
+              success: function (data) {
+                let context;
+
+                if (data.code == '200') {
+                  for (var key in data.data) {
+                    context += "<tr class='bg-white' scope='row'>"
+                      + "<td>" + data.data[key].name + "</td>"
+                      + "<td>" + data.data[key].accountNum + "</td>"
+                      + "<td>" + data.data[key].managerId + "</td>"
+                      + "<td>" + data.data[key].managerName + "</td>"
+                      + "<td>" + data.data[key].perm + "</td>"
+                      + "<td>" + new Date(data.data[key].joinDate).toLocaleDateString() + "</td>"
+                      + "<td>" + new Date(data.data[key].expireDate).toLocaleDateString() + "</td>"
+                      + "<td>" + data.data[key].deleteFlag + "</td>"
+                      + "<td>" + data.data[key].projectCode + "</td>"
+                      + "<td>" + data.data[key].proportion + "</td>"
+                      + "<td>" + data.data[key].projectName + "</td>"
+                      + "<td>" + data.data[key].projectExpireDate + "</td>"
+                      + "<td>" + data.data[key].projectMemberExpireDate + "</td>"
+                      + "<td>" + data.data[key].projectMemberStartDate + "</td>"
+                      + "<td><button type='button' class='btn btn-primary btn-icon-only' id=" + data.data[key].accountNum + " data-toggle='modal' data-target='#modal_1' onclick='editProfile()'>"
+                      + "<span class='btn-inner--icon'><i class='fas fa-user'></i></span></button></td>"
+                  }
+
+                  $("#profileTbody").append(context);
+                }
+              },
+              error: function (data) {
+                $("#accessTbody").empty();
+                $("#errorMsg").text("Opps,Connect Error Happened Please Retry!");
+                $("#noAccessPopUp").click();
+                $("#projectInfo").click();
+              }
+            });
+          }
+        },
+        error: function (data) {
+          $("#createProjectBtn").hide();
+          $("#profileInfo").hide();
+          $("#removeProjectBtn").hide();
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps,Connect Error Happened Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      });
+  }
+</script>

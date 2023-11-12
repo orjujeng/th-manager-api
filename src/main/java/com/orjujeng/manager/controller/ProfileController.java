@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.orjujeng.manager.entity.BindingInfo;
+import com.orjujeng.manager.entity.EditProfileVo;
 import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.entity.NewProfileVo;
 import com.orjujeng.manager.entity.ProjectDeleteVo;
@@ -38,7 +39,7 @@ public class ProfileController {
 	ProfileService profileService;
 	@RequestMapping("/profileList")
 	public Result getProfileList(HttpSession session) throws InterruptedException, ExecutionException {
-		//TODO
+		//TODO redis
 		String s = JSON.toJSONString(session.getAttribute("loginUser"));
 		MemberInfo memberInfo = JSONObject.parseObject(s, MemberInfo.class);
 		String accountNum = memberInfo.getAccountNum();
@@ -83,9 +84,41 @@ public class ProfileController {
 			return result;
 		}
 	}
+	
 	@RequestMapping("/addNewProfile")
 	public Result addNewProfile(@RequestBody @Valid NewProfileVo newProfileVo,HttpSession session) {
 		Result result = profileService.addNewProfile(newProfileVo,session);
+		return result;
+	}
+	
+	@RequestMapping("/editProfile")
+	public Result editProfile(@RequestBody @Valid EditProfileVo editProfileVo,HttpSession session) {
+		//member_info
+		//check
+		//Manager Name
+		//Perm
+		//Join Date
+		//Expire Date
+		
+		//binding_info
+		//check
+		//Project Code
+		//Member Project Expire Date
+		//Member Project Start Date
+		//account num
+		Result result = profileService.editProfile(editProfileVo,session);
+		return result;
+	}
+	
+	@RequestMapping("/deleteProfile")
+	public Result deleteProfile(@RequestParam("accountNum") String accountNum,HttpSession session) {
+		Result result = profileService.deleteProfile(accountNum,session);
+		return result;
+	}
+	
+	@RequestMapping("/getProfileListByManagerId")
+	public Result getProfileListByManagerId(HttpSession session) throws InterruptedException, ExecutionException {
+		Result result = profileService.getMemberByManagerId(session);
 		return result;
 	}
 }

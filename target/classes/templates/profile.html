@@ -455,7 +455,7 @@
             $("#createProfileBtn").show();
             $("#profileTable").empty();
             let table = "<thead><tr><th scope='col'>Name</th><th scope='col'>Account Num</th><th scope='col'>Manager Id</th><th scope='col'>Manager Name</th><th scope='col'>Perm</th><th scope='col'>Join Date</th><th scope='col'>Expire Date</th><th scope='col'>Delete Flag</th><th scope='col'>Project Code</th><th scope='col'>Proportion</th><th scope='col'>Project Name</th><th scope='col'>Project Expire Date</th><th scope='col'>Member Project Expire Date</th><th scope='col'>Member Project Start Date</th><th scope='col'>Edit</th><th scope='col'>Delete</th></tr></thead><tbody id='profileTbody'></tbody>"
-         $("#profileTable").append(table);
+            $("#profileTable").append(table);
             $.ajax({
               type: "GET",
               contentType: "application/json",
@@ -540,10 +540,10 @@
                       + "<td>" + data.data[i].id + "</td>"
                       + "<td>" + data.data[i].projectCode + "</td>"
                       + "<td>" + data.data[i].projectName + "</td>"
-                      + "<td>" +  new Date(data.data[i].expireDate).toLocaleDateString()+ "</td>"
+                      + "<td>" + new Date(data.data[i].expireDate).toLocaleDateString() + "</td>"
                       + "<td><button type='button' class='btn btn-primary btn-icon-only' id=" + data.data[i].id + " data-toggle='modal' data-target='#modal_1' onclick='editProject()'>"
                       + "<span class='btn-inner--icon'><i class='fas fa-user'></i></span></button></td>"
-                      + "<td><button type='button' class='btn btn-danger btn-icon-only' id='" + data.data[i].id + "' name ='" + data.data[i].projectCode + "' onclick='deleteProject()'>"
+                      + "<td><button type='button' class='btn btn-danger btn-icon-only' id='" + data.data[i].id + "' name ='" + data.data[i].projectCode + "' data-target='#modal_1' onclick='deleteProject()'>"
                       + "<span class='btn-inner--icon'><i class='fas fa-trash-alt'></i></span></button></td>"
                   }
                 }
@@ -586,20 +586,20 @@
   })
 
   //click create profile button
-  //Create Profile subbmit
+
   var createProfileSub = function () {
 
     let newProfileProjectSelectList = new Array();
     newProfileProjectSelectList = $("#newProfileProjectSelect").val().split(',');
     let newProfileProjectStartDateList = new Array();
     newProfileProjectStartDateList = $("#newProfileProjectStartDate").val().split(',');
-    for(let i=0;i<newProfileProjectStartDateList.length;i++){
-      newProfileProjectStartDateList[i]=new Date(newProfileProjectStartDateList[i]);
+    for (let i = 0; i < newProfileProjectStartDateList.length; i++) {
+      newProfileProjectStartDateList[i] = new Date(newProfileProjectStartDateList[i]);
     }
     let newProfileProjectExpireDateList = new Array();
     newProfileProjectExpireDateList = $("#newProfileProjectExpireDate").val().split(',');
-    for(let i=0;i<newProfileProjectExpireDateList.length;i++){
-      newProfileProjectExpireDateList[i]=new Date(newProfileProjectExpireDateList[i]);
+    for (let i = 0; i < newProfileProjectExpireDateList.length; i++) {
+      newProfileProjectExpireDateList[i] = new Date(newProfileProjectExpireDateList[i]);
     }
     let input = {
       englishName: $("#newProfileEnglishName").val(),
@@ -635,6 +635,114 @@
           $("#noAccessPopUp").click();
         }
       })
+  }
+  // edit profile button
+  var editProfile = function () {
+    $("#modal_1").empty();
+    if (event.target.className != "btn btn-primary btn-icon-only") {
+      $("#modal_1").append("<div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='modal_title_6'>Notification</h5>  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>    <span aria-hidden='true'>&times;</span>  </button></div><div class='modal-body'>  <div class='py-3 text-center'>    <i class='fas fa-exclamation-circle fa-4x'></i>    <h4 class='heading mt-4'>Please Click The Button Not Icon!</h4>    <p>      You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a gallery:</p></div></div><div class='modal-footer'><button type='button' class='btn btn-sm btn-secondary' data-dismiss='modal'>Got it</button></div></div></div>")
+    } else {
+      let context = '';
+      context += "<div class='modal-dialog modal-lg' role='document'><div class='modal-content'><div class='modal-body'><div class='row justify-content-center'><div class='col-lg-8 text-center py-4'><h4 class='heading h3'>Edit This Profile!</h4><p class='lead text-muted'>You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain a gallery:</p>"
+        + "<div class='form-group'><input type='text' id='editProfileAccountNum' class='form-control border-0' value='" + event.target.id + "' readonly='true'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileManagerName' class='form-control border-0' placeholder='Manager Name'></div>"
+        + "<div class='form-group'><input type='text' id='editProfilePerm' class='form-control border-0' placeholder='Perm Y|N'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileJoinDate' class='form-control border-0' placeholder='Join Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileExpiredDate' class='form-control border-0' placeholder='Expired Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectSelect' class='form-control border-0' placeholder='Project Select'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectStartDate' class='form-control border-0' placeholder='Project Start Date'></div>"
+        + "<div class='form-group'><input type='text' id='editProfileProjectExpireDate' class='form-control border-0' placeholder='Project Expire Date'></div>"
+        + "<button type='button' class='btn btn-primary' onclick='editProfileSub()'>Edit Profile</button></div></div></div></div>"
+      $("#modal_1").append(context)
+    }
+  }
+  //confirm click edit profile button
+  var editProfileSub = function () {
+    let editProfileProjectSelectList = new Array();
+    editProfileProjectSelectList = $("#editProfileProjectSelect").val().split(',');
+    let editProfileProjectStartDateList = new Array();
+    editProfileProjectStartDateList = $("#editProfileProjectStartDate").val().split(',');
+    for (let i = 0; i < editProfileProjectStartDateList.length; i++) {
+      editProfileProjectStartDateList[i] = new Date(editProfileProjectStartDateList[i]);
+    }
+    let editProfileProjectExpireDateList = new Array();
+    editProfileProjectExpireDateList = $("#editProfileProjectExpireDate").val().split(',');
+    for (let i = 0; i < editProfileProjectExpireDateList.length; i++) {
+      editProfileProjectExpireDateList[i] = new Date(editProfileProjectExpireDateList[i]);
+    }
+    let input = {
+      accountNum: $("#editProfileAccountNum").val(),
+      managerName: $("#editProfileManagerName").val(),
+      perm: $("#editProfilePerm").val(),
+      joinDate: new Date($("#editProfileJoinDate").val()),
+      expiredDate: new Date($("#editProfileExpiredDate").val()),
+      projectCode: editProfileProjectSelectList,
+      projectStartDate: editProfileProjectStartDateList,
+      projectExpireDate: editProfileProjectExpireDateList
+    }
+    $.ajax(
+      {
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(input),
+        url: "/manager/profile/editProfile",
+        success: function (data) {
+          if (data.code == '200') {
+            $("#profileInfo").click();
+          }
+          else {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Update Error,Please Retry!");
+            $("#noAccessPopUp").click();
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps, Update Error,Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      })
+  }
+  //click remove profile button
+  var deleteProfile = function () {
+    let input = {
+      accountNum: event.target.id
+    }
+    if (event.target.className != "btn btn-danger btn-icon-only") {
+      $("#accessTbody").empty();
+      $("#errorMsg").text("Please Click Button Not Icon");
+      $("#noAccessPopUp").click();
+    } else {
+      $.ajax(
+        {
+          type: "POST",
+          contentType: 'application/x-www-form-urlencoded',
+          //contentType: "application/json",
+          data: {
+            accountNum: event.target.id
+          },
+          url: "/manager/profile/deleteProfile",
+          success: function (data) {
+            if (data.code == '200') {
+              $("#profileInfo").click();
+            } else if (data.code == '009') {
+              $("#accessTbody").empty();
+              $("#errorMsg").text("Opps, Profile Still As Manger, Please Check!");
+              $("#noAccessPopUp").click();
+            }
+            else {
+              $("#accessTbody").empty();
+              $("#errorMsg").text("Opps, Delete With Error,Please Retry!");
+              $("#noAccessPopUp").click();
+            }
+          },
+          error: function (data) {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Delete With Error,Please Retry!");
+            $("#noAccessPopUp").click();
+          }
+        })
+    }
   }
   //jump to this page 
   $.ajax(

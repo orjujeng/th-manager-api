@@ -128,8 +128,30 @@
         </div>
       </div>
     </div>
+    <!-- main -->
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center py-4">
+              <h4 class="heading h3">New TimeSheet Request!</h4>
+              <p class="lead text-muted">
+                You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain
+                a gallery:
+              </p>
+              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Start Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' placeholder='End Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Expire Finished Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Bank Holiday'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Exclude Who ?'></div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Subbmit !</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- main -->
     <section class="slice slice-lg">
-
       <div class="container">
         <div class="mb-5 text-center">
           <h3 class="heading h2">Stay tuned with our company news</h3>
@@ -278,15 +300,15 @@
 <script th:src="@{/assets/js/theme.js}"></script>
 <script>
   $.ajax(
-      {
+    {
       type: 'GET',
       dataType: "json",
       url: "/manager/auth/check?type=timesheet_access",
       success: function (data) {
-       if (data.code == '006') {
+        if (data.code == '006') {
           $("#errorMsg").text("You do not have access to find this info!");
           $("#noAccessPopUp").click();
         }
       }
     });
-  </script>
+</script>
