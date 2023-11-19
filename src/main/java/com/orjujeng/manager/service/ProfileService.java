@@ -14,6 +14,7 @@ import com.orjujeng.manager.entity.NewProfileVo;
 import com.orjujeng.manager.entity.ProjectInfo;
 import com.orjujeng.manager.utils.Result;
 
+
 @Service
 public interface ProfileService {
 	Result getAllProfileInfo(String accountNum) throws InterruptedException, ExecutionException;

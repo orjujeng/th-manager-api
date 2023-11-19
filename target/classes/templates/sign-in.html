@@ -70,7 +70,7 @@
     </div>
   </nav>
   <main class="main">
-  </div>
+    </div>
     <section class="py-xl bg-cover bg-size--cover"
       th:style="'background-image: url('+ @{/assets/images/backgrounds/img-1.jpg} +')'">
       <span class="mask bg-primary alpha-6"></span>
@@ -87,12 +87,14 @@
                   <img th:src="@{/assets/images/brand/icon.png}" style="width: 50px;">
                   <h4 class="heading h3 text-white pt-3 pb-5">Welcome back,<br>
                     login to your account.</h4>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertPopup" hidden="true">
-                      <span class="alert-inner--text"><strong>Danger</strong> This is an error alert—check it out!</span>
-                    </div>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertPopup"
+                    hidden="true">
+                    <span class="alert-inner--text"><strong>Danger</strong> This is an error alert—check it out!</span>
+                  </div>
                   <form class="form-primary" id="loginInForm">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="input_email" placeholder="Account Num" name="accountNum">
+                      <input type="text" class="form-control" id="input_email" placeholder="Account Num"
+                        name="accountNum">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control" id="input_password" placeholder="Password"
@@ -203,10 +205,10 @@
 </body>
 <script>
   $('#loginInButton').click(function () {
-	  var formData = {
-			  accountNum: $("#input_email").val(),
-              password: $("#input_password").val()
-          };
+    var formData = {
+      accountNum: $("#input_email").val(),
+      password: $("#input_password").val()
+    };
     $.ajax({
       url: "/manager/auth/login",
       type: "POST",
@@ -214,10 +216,10 @@
       data: JSON.stringify(formData),
       success: function (data) {
         if (data.code == 200) {
-          window.location.href='/manager/page/main';
-        } else if(data.code == 005){
-        	$('#alertPopup').removeAttr('hidden');
-            $('#alertPopup').html('Incorrect Password or AccountNum');
+          window.location.href = '/manager/page/main';
+        } else if (data.code == '005') {
+          $('#alertPopup').removeAttr('hidden');
+          $('#alertPopup').html('Incorrect Password or AccountNum');
         }
         else {
           $('#alertPopup').removeAttr('hidden');

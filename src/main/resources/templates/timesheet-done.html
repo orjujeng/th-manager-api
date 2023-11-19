@@ -95,7 +95,55 @@
         </div>
       </div>
     </section>
+    <section>
+      <div class="row" id="buttonList">
+        <div class="progress-wrapper offset-md-6 col-md-3">
+          <h2 class="progress-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Task completed</h2>
+          <div class="progress" style="height: 16px;">
+            <div class="progress-bar bg-green" role="progressbar" style="width: 0%;" aria-valuenow="80"
+              aria-valuemin="0" aria-valuemax="100" id="progressStatus">0%</div>
+          </div>
+        </div>
 
+        <div class="dropdown col-md-2" style="margin: 0; padding: 0; width: 100%;">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" id="timesheetDate" style="width: 100%;">
+          </button>
+          <div class="dropdown-menu" id="timesheetOpt" style="width: 100%;">
+            <!-- <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a> -->
+          </div>
+        </div>
+
+        <div class="col-md-1" style="margin: 0; padding: 0;">
+          <button type="button" class="btn btn-block btn-success" onclick='openThisThSeq()'
+            id="updateAllFinishButton">Open This Timesheet</button>
+        </div>
+      </div>
+
+      <table class="table table-hover table-cards align-items-center">
+        <thead>
+          <tr>
+            <th scope='col'>Name</th>
+            <th scope='col'>Account Num</th>
+            <!-- <th scope='col'>Member Id</th> -->
+            <th scope='col'>Start Date</th>
+            <th scope='col'>End Date</th>
+            <th scope='col'>Except Finish Date</th>
+            <th scope='col'>Bank Holiday Date</th>
+            <th scope='col'>Annual Leaving Date</th>
+            <th scope='col'>Sick Leaving Date</th>
+            <th scope='col'>Annual Leaving Days</th>
+            <th scope='col'>Sick Leaving Days</th>
+            <th scope='col'>Work Days</th>
+            <th scope='col'>Act Work Days</th>
+          </tr>
+        </thead>
+        <tbody id='timesheetTbody'>
+        </tbody>
+      </table>
+    </section>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal_5" hidden="true"
@@ -278,16 +326,140 @@
 <!-- Theme JS -->
 <script th:src="@{/assets/js/theme.js}"></script>
 <script>
+    //jump to this page 
+  thJumpPage("Y", null);
+
+    //changeTimesheetSeq
+  var changeTimesheetSeq = function () {
+    thJumpPage("Y", event.target.name);
+  }
+
+  //openThissheetSeq
+  var openThisThSeq = function () {
     $.ajax(
-        {
+      {
+        type: "POST",
+        contentType: 'application/x-www-form-urlencoded',
+        //contentType: "application/json",
+        data: {
+          seqId: event.target.name
+        },
+        url: "/manager/timesheet/openTimesheet",
+        success: function (data) {
+          if (data.code == '200') {
+            thJumpPage("Y", null);
+          }
+          else {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Update With Error,Please Retry!");
+            $("#noAccessPopUp").click();
+            thJumpPage("Y", null);
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps, Update With Error,Please Retry!");
+          $("#noAccessPopUp").click();
+          thJumpPage("Y", null);
+        }
+      })
+  }
+  function thJumpPage(finished, seqId) {
+    $.ajax(
+      {
         type: 'GET',
         dataType: "json",
         url: "/manager/auth/check?type=timesheet_access",
         success: function (data) {
-         if (data.code == '006') {
+          if (data.code == '006') {
             $("#errorMsg").text("You do not have access to find this info!");
             $("#noAccessPopUp").click();
+          } else {
+            if (seqId == null) {
+              link = "/manager/timesheet/getTimesheetInfo?finished=" + finished
+            } else {
+              link = "/manager/timesheet/getTimesheetInfo?finished=" + finished + "&seqId=" + seqId
+            }
+            $.ajax(
+              {
+                type: 'GET',
+                dataType: "json",
+                url: link,
+                success: function (data) {
+                  if (data.code == '010') {
+                    $("#accessTbody").empty();
+                    $("#errorMsg").text("Opps,No Data In this List!");
+                    $("#noAccessPopUp").click();
+                    $("#timesheetOpt").empty();
+                    $("#timesheetTbody").empty();
+                    $("#timesheetDate").text("No Data Exist");
+                    $("#progressStatus").css("width","0%");
+                    $("#progressStatus").text("0%");
+                    $("#updateAllFinishButton").attr("disabled", true);
+                  } else {
+                    $("#timesheetOpt").empty();
+                    $("#timesheetTbody").empty();
+                    $("#updateAllFinishButton").attr("disabled", false);
+                    $("#updateAllFinishButton").attr("name", data.data.selectedSeqId);
+                    $("#progressStatus").css("width", data.data.selectedProgress + "%");
+                    $("#progressStatus").text(data.data.selectedProgress + "%");
+                    $("#timesheetDate").text(new Date(data.data.selectedStartDate).toLocaleDateString() + "~" + new Date(data.data.selectedEndDate).toLocaleDateString());
+                    let context = "";
+                    for (var key in data.data.allOptionList) {
+                      $("#timesheetOpt").append("<a class='dropdown-item' onclick='changeTimesheetSeq()' style='width: 100%;' name=" + key + ">" + data.data.allOptionList[key] + "</a>")
+                    }
+                    for (var key in data.data.allSeqsDetailInfo) {
+                      bankHolidayDate = data.data.allSeqsDetailInfo[key].bankHolidayDate === null ? null : new Date(data.data.allSeqsDetailInfo[key].bankHolidayDate).toLocaleDateString();
+                      annualLeavingDate = data.data.allSeqsDetailInfo[key].annualLeavingDate === null ? null : data.data.allSeqsDetailInfo[key].annualLeavingDate;
+                      sickLeavingDate = data.data.allSeqsDetailInfo[key].sickLeavingDate === null ? null : data.data.allSeqsDetailInfo[key].sickLeavingDate;
+                      annualLeavingDays = data.data.allSeqsDetailInfo[key].annualLeavingDays === null ? null : data.data.allSeqsDetailInfo[key].annualLeavingDays;
+                      sickLeavingDays = data.data.allSeqsDetailInfo[key].sickLeavingDays === null ? null : data.data.allSeqsDetailInfo[key].sickLeavingDays;
+                      context += "<tr class='bg-white' scope='row'>"
+                        + "<td>" + data.data.allSeqsDetailInfo[key].memberName + "</td>"
+                        + "<td>" + data.data.allSeqsDetailInfo[key].accountNum + "</td>"
+                        // + "<td>" + data.data.allSeqsDetailInfo[key].memberId + "</td>"
+                        + "<td>" + new Date(data.data.allSeqsDetailInfo[key].startDate).toLocaleDateString() + "</td>"
+                        + "<td>" + new Date(data.data.allSeqsDetailInfo[key].endDate).toLocaleDateString() + "</td>"
+                        + "<td>" + new Date(data.data.allSeqsDetailInfo[key].exceptFinishDate).toLocaleDateString() + "</td>"
+                        + "<td>" + bankHolidayDate + "</td>"
+                        + "<td>" + annualLeavingDate + "</td>"
+                        + "<td>" + sickLeavingDate + "</td>"
+                        + "<td>" + annualLeavingDays + "</td>"
+                        + "<td>" + sickLeavingDays + "</td>"
+                        + "<td>" + data.data.allSeqsDetailInfo[key].workDays+ "</td>"
+                        + "<td>" + data.data.allSeqsDetailInfo[key].actWorkDays + "</td>"
+                        
+                    }
+                    $("#timesheetTbody").append($(context));
+                  }
+                },
+                error: function (data) {
+                  $("#timesheetOpt").empty();
+                  $("#timesheetTbody").empty();
+                  $("#timesheetDate").text("No Data Exist");
+                  $("#updateAllFinishButton").attr("disabled", true);
+                  $("#progressStatus").css("width","0%");
+                  $("#progressStatus").text("0%");
+
+                  $("#accessTbody").empty();
+                  $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+                  $("#noAccessPopUp").click();
+                }
+              })
           }
+        },
+        error: function (data) {
+          $("#timesheetOpt").empty();
+          $("#timesheetTbody").empty();
+          $("#timesheetDate").text("No Data Exist");
+          $("#updateAllFinishButton").attr("disabled", true);
+          $("#progressStatus").css("width","0%");
+          $("#progressStatus").text("0%");
+
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps,Connect Error Happen Please Retry!");
+          $("#noAccessPopUp").click();
         }
       });
-    </script>
+  }
+</script>

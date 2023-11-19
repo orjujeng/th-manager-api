@@ -17,7 +17,7 @@ import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.fegin.AuthApiFeginService;
 import com.orjujeng.manager.service.AuthService;
 import com.orjujeng.manager.utils.Result;
-import com.orjujeng.manager.utils.ResultCode;
+
 
 @Service
 public class AuthServiceImpl implements AuthService{

@@ -19,6 +19,7 @@ import com.orjujeng.manager.utils.Result;
 
 
 
+
 @FeignClient("TH-ProfileApi")
 public interface ProfileApiFeginService {
 	

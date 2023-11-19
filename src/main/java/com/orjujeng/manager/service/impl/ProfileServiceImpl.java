@@ -32,6 +32,7 @@ import com.orjujeng.manager.service.ProfileService;
 import com.orjujeng.manager.utils.Result;
 import com.orjujeng.manager.utils.ResultCode;
 
+
 @Service
 public class ProfileServiceImpl implements ProfileService {
 	@Autowired

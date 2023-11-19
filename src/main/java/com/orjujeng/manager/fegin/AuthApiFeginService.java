@@ -10,6 +10,7 @@ import com.orjujeng.manager.entity.LoginInfo;
 import com.orjujeng.manager.utils.Result;
 
 
+
 @FeignClient("TH-AuthApi")
 public interface AuthApiFeginService {
 	@RequestMapping("auth/vaildLogin")

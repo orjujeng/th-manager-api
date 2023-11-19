@@ -139,12 +139,12 @@
                 You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain
                 a gallery:
               </p>
-              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Start Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' placeholder='End Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Expire Finished Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Bank Holiday'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' placeholder='Exclude Who ?'></div>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Subbmit !</button>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetStartDate' placeholder='Start Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetEndDate' placeholder='End Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetExceptFinishedDate' placeholder='Except Finished Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetBankHoliday' placeholder='Bank Holiday'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetExcludeName' placeholder='Exclude Name?'></div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="newTimesheetRequest()">Subbmit !</button>
             </div>
           </div>
         </div>
@@ -311,4 +311,52 @@
         }
       }
     });
+//new timesheet
+var newTimesheetRequest = function(){
+    let newTimesheetBankHolidayList = new Array();
+    newTimesheetBankHolidayList = $("#newTimesheetBankHoliday").val().split(',');
+    for (let i = 0; i < newTimesheetBankHolidayList.length; i++) {
+      newTimesheetBankHolidayList[i] =new Date(newTimesheetBankHolidayList[i]);
+    }
+    let newTimesheetExcludeNameList=new Array();
+    newTimesheetExcludeNameList = $("#newTimesheetExcludeName").val().split(',');
+
+    if(newTimesheetExcludeNameList[0]==""){
+      newTimesheetExcludeNameList.shift();
+    }
+    if(isNaN(newTimesheetBankHolidayList[0].getTime())){
+      newTimesheetBankHolidayList.shift();
+    }
+  input={
+    startDate : new Date($("#newTimesheetStartDate").val()),
+    endDate : new Date($("#newTimesheetEndDate").val()),
+    exceptFinishedDate : new Date($("#newTimesheetExceptFinishedDate").val()),
+    bankHolidayList: newTimesheetBankHolidayList,
+    excludeName:newTimesheetExcludeNameList
+  }
+  $.ajax(
+      {
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(input),
+        url: "/manager/timesheet/newTimesheet",
+        success: function (data) {
+          if (data.code == '200') {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Submit Success Please Check in 'TimeSheet In Progress'");
+            $("#noAccessPopUp").click();
+          }
+          else {
+            $("#accessTbody").empty();
+            $("#errorMsg").text("Opps, Add TimeSheet with Error,Please Retry!");
+            $("#noAccessPopUp").click();
+          }
+        },
+        error: function (data) {
+          $("#accessTbody").empty();
+          $("#errorMsg").text("Opps, Add TimeSheet with Error,Please Retry!");
+          $("#noAccessPopUp").click();
+        }
+      })
+}
 </script>
