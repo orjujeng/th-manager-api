@@ -401,7 +401,7 @@
   //changeFinishStatusOfOneRow()
   function changeFinishStatusOfOneRow(flag) {
     var id = event.target.name
-    var seqId = event.target.seqId
+    var seqId = event.target.attributes.seqId.value
     var input = {
       id: event.target.name,
       finished: flag
@@ -431,6 +431,7 @@
     });
   }
   function thJumpPage(finished, seqId) {
+    $("#updateAllFinishButton").removeAttr("disabled");
     $.ajax(
       {
         type: 'GET',
@@ -440,6 +441,7 @@
           if (data.code == '006') {
             $("#errorMsg").text("You do not have access to find this info!");
             $("#noAccessPopUp").click();
+            $("#updateAllFinishButton").attr("disabled", true);
           } else {
             if (seqId == null) {
               link = "/manager/timesheet/getTimesheetInfo?finished=" + finished
@@ -482,14 +484,14 @@
                       sickLeavingDays = data.data.allSeqsDetailInfo[key].sickLeavingDays === null ? null : data.data.allSeqsDetailInfo[key].sickLeavingDays;
                       if (data.data.allSeqsDetailInfo[key].finished === "Y") {
                         updateBtn = "<td><button type='button' class='btn btn-block btn-primary' disabled>Update</button></td>";
-                        changeFinishBtn = "<td scope='col'><button type='button' class='btn btn-block btn-success' name ='" + data.data.allSeqsDetailInfo[key].id + "' seqId ='" + data.data.allSeqsDetailInfo[key].seqId + "' onclick=changeFinishStatusOfOneRow('N')>Open</button></td></tr>"
-                        inpuntInfo = "<td><input type='text' class='form-control border-0' value='" + annualLeavingDate + "' style='width: 150px;' disabled></td>"
+                        changeFinishBtn = "<td scope='col'><button type='button' class='btn btn-block btn-success' name ='" + data.data.allSeqsDetailInfo[key].id + "' seqId ='"+data.data.allSeqsDetailInfo[key].seqId+"' onclick=changeFinishStatusOfOneRow('N')>Open</button></td></tr>"
+                        inputInfo = "<td><input type='text' class='form-control border-0' value='" + annualLeavingDate + "' style='width: 150px;' disabled></td>"
                           + "<td><input type='text' class='form-control border-0' value='" + sickLeavingDate + "' style='width: 150px;' disabled></td>"
                           + "<td><input type='text' class='form-control border-0' value='" + annualLeavingDays + "' style='width: 150px;' disabled></td>"
                           + "<td><input type='text' class='form-control border-0' value='" + sickLeavingDays + "' style='width: 150px;' disabled></td>"
                       } else {
                         updateBtn = "<td><button type='button' class='btn btn-block btn-primary' name ='" + data.data.allSeqsDetailInfo[key].id + "' seqId ='" + data.data.allSeqsDetailInfo[key].seqId + "' onclick='updateTHInfoOfOneRow()'>Update</button></td>";
-                        changeFinishBtn = "<td scope='col'><button type='button' class='btn btn btn-block btn-danger' name ='" + data.data.allSeqsDetailInfo[key].id + "' seqId ='" + data.data.allSeqsDetailInfo[key].seqId + "'' onclick=changeFinishStatusOfOneRow('Y')>Finish</button></td></tr>"
+                        changeFinishBtn = "<td scope='col'><button type='button' class='btn btn btn-block btn-danger' name ='" + data.data.allSeqsDetailInfo[key].id + "' seqId ='"+data.data.allSeqsDetailInfo[key].seqId + "' onclick=changeFinishStatusOfOneRow('Y')>Finish</button></td></tr>"
                         inputInfo = "<td><input type='text' class='form-control border-0' value='" + annualLeavingDate + "' id='alDate" + data.data.allSeqsDetailInfo[key].id + "' style='width: 150px;'></td>"
                           + "<td><input type='text' class='form-control border-0' value='" + sickLeavingDate + "' id='slDate" + data.data.allSeqsDetailInfo[key].id + "' style='width: 150px;'></td>"
                           + "<td><input type='text' class='form-control border-0' value='" + annualLeavingDays + "' id='ald" + data.data.allSeqsDetailInfo[key].id + "' style='width: 150px;'></td>"

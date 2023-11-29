@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html>
 
 <head>
@@ -205,6 +205,7 @@
 </body>
 <script>
   $('#loginInButton').click(function () {
+    $('#alertPopup').attr('hidden');
     var formData = {
       accountNum: $("#input_email").val(),
       password: $("#input_password").val()
@@ -220,6 +221,9 @@
         } else if (data.code == '005') {
           $('#alertPopup').removeAttr('hidden');
           $('#alertPopup').html('Incorrect Password or AccountNum');
+        } else if (data.code == '008') {
+          $('#alertPopup').removeAttr('hidden');
+          $('#alertPopup').html('No Access To Login TimeSheet Tool');
         }
         else {
           $('#alertPopup').removeAttr('hidden');

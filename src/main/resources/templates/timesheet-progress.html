@@ -431,6 +431,7 @@
     });
   }
   function thJumpPage(finished, seqId) {
+    $("#updateAllFinishButton").removeAttr("disabled");
     $.ajax(
       {
         type: 'GET',
@@ -440,6 +441,7 @@
           if (data.code == '006') {
             $("#errorMsg").text("You do not have access to find this info!");
             $("#noAccessPopUp").click();
+            $("#updateAllFinishButton").attr("disabled", true);
           } else {
             if (seqId == null) {
               link = "/manager/timesheet/getTimesheetInfo?finished=" + finished

@@ -95,7 +95,21 @@
         </div>
       </div>
     </section>
+    <table class="table table-hover align-items-center" id="pendingRequest">
+      <thead>
+        <tr>
+          <th scope='col'>Name</th>
+          <th scope='col'>Account Num</th>
+          <th scope='col'>Request Type</th>
+          <th scope='col'>Request Date</th>
+          <th scope='col'>Allow</th>
+          <th scope='col'>Deny</th>
+        </tr>
+      </thead>
+      <tbody id='pendingRequestTbody'>
 
+      </tbody>
+    </table>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal_5" hidden="true"
       id="noAccessPopUp">
@@ -277,16 +291,103 @@
 <!-- Theme JS -->
 <script th:src="@{/assets/js/theme.js}"></script>
 <script>
+
+  jumpToPage();
+
+
+  var denyClick = function () {
+    input = {
+      type: event.target.name,
+      memberId: event.target.attributes.memberId.value,
+      status: 'D',
+      requestId: event.target.attributes.requestId.value
+    }
     $.ajax(
-        {
+      {
+        type: 'POST',
+        contentType: "application/json",
+        url: "/manager/request/changePendingRequestStatus",
+        data: JSON.stringify(input),
+        success: function (data) {
+          if (data.code == "200") {
+            jumpToPage();
+          }
+        },
+        error: function (data) {
+          $("#errorMsg").text("Network Issue Please retry");
+          $("#noAccessPopUp").click();
+        }
+      })
+  }
+
+
+  var allowClick = function () {
+    input = {
+      type: event.target.name,
+      memberId: event.target.attributes.memberId.value,
+      status: 'A',
+      requestId: event.target.attributes.requestId.value
+    }
+    $.ajax(
+      {
+        type: 'POST',
+        contentType: "application/json",
+        url: "/manager/request/changePendingRequestStatus",
+        data: JSON.stringify(input),
+        success: function (data) {
+          if (data.code == "200") {
+            jumpToPage();
+          }
+        },
+        error: function (data) {
+          $("#errorMsg").text("Network Issue Please retry");
+          $("#noAccessPopUp").click();
+        }
+      })
+  }
+  function jumpToPage() {
+    $("#pendingRequestTbody").empty();
+    $.ajax(
+      {
         type: 'GET',
         dataType: "json",
         url: "/manager/auth/check?type=request_access",
         success: function (data) {
-         if (data.code == '006') {
+          if (data.code == '006') {
             $("#errorMsg").text("You do not have access to find this info!");
             $("#noAccessPopUp").click();
+          } else {
+            $.ajax({
+              type: 'GET',
+              dataType: "json",
+              url: "/manager/request/getRequestInfo?status=P",
+              success: function (data) {
+                if (data.code == '200') {
+                  let context = "";
+                  for (var key in data.data) {
+                    context += "<tr class='bg-white' scope='row'>"
+                      + "<td>" + data.data[key].memberName + "</td>"
+                      + "<td>" + data.data[key].accountNum + "</td>"
+                      + "<td>" + data.data[key].requestType + "</td>"
+                      + "<td>" + new Date(data.data[key].requestDate).toLocaleDateString() + "</td>"
+                      + "<td><button type='button' class='btn btn-block btn-success' requestId = '" + data.data[key].id + "' name ='" + data.data[key].requestType + "' memberId ='" + data.data[key].memberId + "' onclick=allowClick()>Allow</button></td>"
+                      + "<td scope='col'><button type='button' class='btn btn-block btn-warning' requestId = '" + data.data[key].id + "' name ='" + data.data[key].requestType + "' memberId ='" + data.data[key].memberId + "' onclick=denyClick()>Deny</button></td></tr>"
+                  }
+                  $("#pendingRequestTbody").append(context);
+                }
+              },
+              error: function (data) {
+                $("#errorMsg").text("Network Issue Please retry");
+                $("#noAccessPopUp").click();
+              }
+            })
           }
+        },
+        error: function (data) {
+          $("#errorMsg").text("Network Issue Please retry");
+          $("#noAccessPopUp").click();
         }
       });
-    </script>
+  }
+
+</script>

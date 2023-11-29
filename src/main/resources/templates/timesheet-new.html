@@ -139,12 +139,18 @@
                 You can easy create stackable modal boxes. For example, your inline content or Ajax response can contain
                 a gallery:
               </p>
-              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetStartDate' placeholder='Start Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetEndDate' placeholder='End Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetExceptFinishedDate' placeholder='Except Finished Date'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetBankHoliday' placeholder='Bank Holiday'></div>
-              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetExcludeName' placeholder='Exclude Name?'></div>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="newTimesheetRequest()">Subbmit !</button>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetStartDate'
+                  placeholder='Start Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetEndDate'
+                  placeholder='End Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0'
+                  id='newTimesheetExceptFinishedDate' placeholder='Except Finished Date'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetBankHoliday'
+                  placeholder='Bank Holiday'></div>
+              <div class='form-group'><input type="text" class='form-control border-0' id='newTimesheetExcludeName'
+                  placeholder='Exclude Name?'></div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="newTimesheetRequest()"
+                id="newTimesheetRequestButton">Subbmit !</button>
             </div>
           </div>
         </div>
@@ -299,6 +305,7 @@
 <!-- Theme JS -->
 <script th:src="@{/assets/js/theme.js}"></script>
 <script>
+  $("#newTimesheetRequestButton").removeAttr("disabled");
   $.ajax(
     {
       type: 'GET',
@@ -306,35 +313,36 @@
       url: "/manager/auth/check?type=timesheet_access",
       success: function (data) {
         if (data.code == '006') {
+          $("#newTimesheetRequestButton").attr("disabled", "disabled")
           $("#errorMsg").text("You do not have access to find this info!");
           $("#noAccessPopUp").click();
         }
       }
     });
-//new timesheet
-var newTimesheetRequest = function(){
+  //new timesheet
+  var newTimesheetRequest = function () {
     let newTimesheetBankHolidayList = new Array();
     newTimesheetBankHolidayList = $("#newTimesheetBankHoliday").val().split(',');
     for (let i = 0; i < newTimesheetBankHolidayList.length; i++) {
-      newTimesheetBankHolidayList[i] =new Date(newTimesheetBankHolidayList[i]);
+      newTimesheetBankHolidayList[i] = new Date(newTimesheetBankHolidayList[i]);
     }
-    let newTimesheetExcludeNameList=new Array();
+    let newTimesheetExcludeNameList = new Array();
     newTimesheetExcludeNameList = $("#newTimesheetExcludeName").val().split(',');
 
-    if(newTimesheetExcludeNameList[0]==""){
+    if (newTimesheetExcludeNameList[0] == "") {
       newTimesheetExcludeNameList.shift();
     }
-    if(isNaN(newTimesheetBankHolidayList[0].getTime())){
+    if (isNaN(newTimesheetBankHolidayList[0].getTime())) {
       newTimesheetBankHolidayList.shift();
     }
-  input={
-    startDate : new Date($("#newTimesheetStartDate").val()),
-    endDate : new Date($("#newTimesheetEndDate").val()),
-    exceptFinishedDate : new Date($("#newTimesheetExceptFinishedDate").val()),
-    bankHolidayList: newTimesheetBankHolidayList,
-    excludeName:newTimesheetExcludeNameList
-  }
-  $.ajax(
+    input = {
+      startDate: new Date($("#newTimesheetStartDate").val()),
+      endDate: new Date($("#newTimesheetEndDate").val()),
+      exceptFinishedDate: new Date($("#newTimesheetExceptFinishedDate").val()),
+      bankHolidayList: newTimesheetBankHolidayList,
+      excludeName: newTimesheetExcludeNameList
+    }
+    $.ajax(
       {
         type: "POST",
         contentType: "application/json",
@@ -345,6 +353,20 @@ var newTimesheetRequest = function(){
             $("#accessTbody").empty();
             $("#errorMsg").text("Submit Success Please Check in 'TimeSheet In Progress'");
             $("#noAccessPopUp").click();
+            $("#newTimesheetRequestButton").removeAttr("disabled");
+            $.ajax(
+              {
+                type: 'GET',
+                dataType: "json",
+                url: "/manager/auth/check?type=timesheet_access",
+                success: function (data) {
+                  if (data.code == '006') {
+                    $("#newTimesheetRequestButton").attr("disabled", "disabled")
+                    $("#errorMsg").text("You do not have access to find this info!");
+                    $("#noAccessPopUp").click();
+                  }
+                }
+              });
           }
           else {
             $("#accessTbody").empty();
@@ -358,5 +380,5 @@ var newTimesheetRequest = function(){
           $("#noAccessPopUp").click();
         }
       })
-}
+  }
 </script>
