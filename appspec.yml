@@ -5,7 +5,7 @@ files:
     destination: /webservice
   - source: ./target
     destination: /webservice
-  - source: ./build&expose.sh
+  - source: ./build_expose.sh
     destination: /webservice
 #  - source: Config/config.txt
 #    destination: /webapps/Config
@@ -19,7 +19,7 @@ hooks:
 #    - location: Scripts/RunResourceTests.sh
 #      timeout: 180
   ApplicationStart:
-    - location: build&expose.sh
+    - location: build_expose.sh
       timeout: 3600
       runas: root
 #  ValidateService:
