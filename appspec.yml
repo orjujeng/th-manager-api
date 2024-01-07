@@ -7,6 +7,7 @@ files:
     destination: /webservice
   - source: ./build_expose.sh
     destination: /webservice
+file_exists_behavior: OVERWRITE
 #  - source: Config/config.txt
 #    destination: /webapps/Config
 #  - source: source
@@ -15,13 +16,14 @@ hooks:
 #  BeforeInstall:
 #    - location: Scripts/UnzipResourceBundle.sh
 #    - location: Scripts/UnzipDataBundle.sh
-#  AfterInstall:
-#    - location: Scripts/RunResourceTests.sh
-#      timeout: 180
-  ApplicationStart:
+  AfterInstall:
     - location: build_expose.sh
       timeout: 3600
       runas: root
+#  ApplicationStart:
+#    - location: build_expose.sh
+#      timeout: 3600
+#      runas: root
 #  ValidateService:
 #    - location: Scripts/MonitorService.sh
 #      timeout: 3600
