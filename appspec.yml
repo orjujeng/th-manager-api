@@ -2,23 +2,26 @@ version: 0.0
 os: linux
 files:
   - source: ./Dockerfile
-    destination: /tmp
+    destination: /webservice
   - source: ./target
-    destination: /tmp
+    destination: /webservice
+  - source: ./build&expose.sh
+    destination: /webservice
 #  - source: Config/config.txt
 #    destination: /webapps/Config
 #  - source: source
 #    destination: /webapps/myApp
-#hooks:
+hooks:
 #  BeforeInstall:
 #    - location: Scripts/UnzipResourceBundle.sh
 #    - location: Scripts/UnzipDataBundle.sh
 #  AfterInstall:
 #    - location: Scripts/RunResourceTests.sh
 #      timeout: 180
-#  ApplicationStart:
-#    - location: Scripts/RunFunctionalTests.sh
-#      timeout: 3600
+  ApplicationStart:
+    - location: build&expose.sh
+      timeout: 3600
+      runas: root
 #  ValidateService:
 #    - location: Scripts/MonitorService.sh
 #      timeout: 3600

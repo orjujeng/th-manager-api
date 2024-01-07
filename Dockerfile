@@ -1,6 +1,6 @@
-FROM openjdk:8-jre
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:8
 EXPOSE 8080
 VOLUME /tmp
-ADD target/th-manager-api-0.0.1-SNAPSHOT.jar /app.jar
+ADD /th-manager-api-0.0.1-SNAPSHOT.jar /app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT [ "java","-jar","/app.jar"]
