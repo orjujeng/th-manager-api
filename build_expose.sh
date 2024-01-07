@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 pwd
-sudo cd /webservice
+cd /webservice || exit
 pwd
 ls -al
 sudo mv Dockerfile dockerfile
