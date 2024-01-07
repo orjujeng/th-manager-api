@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 @EnableFeignClients(basePackages = "com.orjujeng.manager.fegin")
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableRedisHttpSession
 public class ThManagerApiApplication {
 
