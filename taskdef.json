@@ -1,9 +1,8 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:877401119357:task-definition/orjujeng-ecs-task-definition:18",
   "containerDefinitions": [
     {
       "name": "th-manager-api",
-      "image": <IMAGE1_NAME>,
+      "image": "public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest",
       "cpu": 256,
       "memory": 256,
       "portMappings": [
@@ -23,21 +22,6 @@
   "taskRoleArn": "arn:aws:iam::877401119357:role/orjujeng_ecs_task_iam_role",
   "executionRoleArn": "arn:aws:iam::877401119357:role/orjujeng_ecs_task_execution_role",
   "networkMode": "bridge",
-  "revision": 18,
-  "volumes": [],
-  "status": "ACTIVE",
-  "requiresAttributes": [
-    {
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    }
-  ],
-  "placementConstraints": [],
-  "compatibilities": [
-    "EXTERNAL",
-    "EC2"
-  ],
-  "requiresCompatibilities": [],
-  "registeredAt": "2024-02-15T16:14:26.228Z",
-  "registeredBy": "arn:aws:sts::877401119357:assumed-role/orjujeng_codepipeline_role/1708013665904",
-  "tags": []
+  "cpu": "256",
+  "memory": "256"
 }
