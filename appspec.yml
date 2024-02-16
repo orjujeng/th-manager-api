@@ -39,5 +39,5 @@ Resources:
       Properties:
         TaskDefinition: <TASK_DEFINITION>
         LoadBalancerInfo:
-          ContainerName: "ecs_container"
+          ContainerName: "th-manager-api"
           ContainerPort: 8080
