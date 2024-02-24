@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "th-manager-api",
-      "image": <IMAGE1_NAME>,
+      "image": "public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api",
       "cpu": 256,
       "memory": 256,
       "portMappings": [
