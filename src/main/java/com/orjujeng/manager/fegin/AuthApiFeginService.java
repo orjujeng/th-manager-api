@@ -11,7 +11,7 @@ import com.orjujeng.manager.utils.Result;
 
 
 
-@FeignClient(name="th-auth-api",url="orjujeng-lb-2098452421.ap-northeast-1.elb.amazonaws.com")
+@FeignClient(name="th-auth-api",url="http://orjujeng-lb-2098452421.ap-northeast-1.elb.amazonaws.com")
 public interface AuthApiFeginService {
 	@RequestMapping("auth/vaildLogin")
 	public Result vaildLogin(@RequestBody LoginInfo logininfo);
