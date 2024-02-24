@@ -11,7 +11,7 @@ import com.orjujeng.manager.utils.Result;
 
 
 
-@FeignClient("TH-AuthApi")
+@FeignClient(url="")
 public interface AuthApiFeginService {
 	@RequestMapping("auth/vaildLogin")
 	public Result vaildLogin(@RequestBody LoginInfo logininfo);
