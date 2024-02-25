@@ -12,7 +12,7 @@ import com.orjujeng.manager.entity.MemberInfo;
 import com.orjujeng.manager.utils.Result;
 
 
-@FeignClient("TH-RequestApi")
+@FeignClient(name="th-request-api",url="${lb_url}")
 public interface RequestFeginService {
 	@RequestMapping("request/requestBeAuth")
 	public Result requestBeAuth(@RequestBody MemberInfo memberInfo);

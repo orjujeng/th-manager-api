@@ -14,7 +14,7 @@ import com.orjujeng.manager.utils.Result;
 
 
 
-@FeignClient("TH-TimesheetApi")
+@FeignClient(name="th-timesheet-api",url="${lb_url}")
 public interface TimesheetFeginService {
 	@PostMapping("/timesheet/newTimesheet")
 	public Result newTimesheet(@RequestBody List<NewTimesheetDTO> newTimesheetDTO);

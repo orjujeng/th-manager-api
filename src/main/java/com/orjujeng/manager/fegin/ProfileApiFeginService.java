@@ -20,7 +20,7 @@ import com.orjujeng.manager.utils.Result;
 
 
 
-@FeignClient("TH-ProfileApi")
+@FeignClient(name="th-profile-api",url="${lb_url}")
 public interface ProfileApiFeginService {
 	
 	@GetMapping("/profile/project/getAllProject")
