@@ -24,7 +24,6 @@
       ]
     }
   ],
-
   "family": "orjujeng-manager-api-ecs-task-definition",
   "taskRoleArn": "arn:aws:iam::877401119357:role/orjujeng_ecs_task_iam_role",
   "executionRoleArn": "arn:aws:iam::877401119357:role/orjujeng_ecs_task_execution_role",
